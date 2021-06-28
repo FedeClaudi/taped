@@ -30,7 +30,7 @@ from loguru import logger
 logger.info('I cant wait to check the logs later!')
 
 
-# you can add data easily
+# you can save data to file easily
 import numpy as np
 X = np.random.rand(100, 100)
 recorder.add_data(X, 'my_results', fmt='npy')  # or 'mat' for matlab
@@ -57,4 +57,4 @@ recorder.describe()
 
 ```
 The result should look somthing like this:
-![](example.pngq)
+![](https://github.com/FedeClaudi/taped/blob/main/example.png)
