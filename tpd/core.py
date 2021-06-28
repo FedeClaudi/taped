@@ -194,8 +194,8 @@ class Recorder:
         rep.spacer()
         rep.add(f"Saved: [bold {orange}]{len(self.saved_figures)}[/] figures:")
         figs_table = utils._make_table("#", "name")
-        for n, name in enumerate(self.saved_figures):
-            figs_table.add_row(str(n), str(name))
+        for n, fl in enumerate(self.saved_figures):
+            figs_table.add_row(str(n), f"{fl.name}.png")
 
         rep.add(figs_table, "rich")
 
@@ -203,8 +203,8 @@ class Recorder:
         rep.spacer()
         rep.add(f"Saved: [bold {orange}]{len(self.saved_data)}[/] data:")
         data_table = utils._make_table("#", "name")
-        for n, name in enumerate(self.saved_data):
-            data_table.add_row(str(n), str(name))
+        for n, fl in enumerate(self.saved_data):
+            data_table.add_row(str(n), f"{fl.name}")
         rep.add(data_table, "rich")
 
         rep.print()
