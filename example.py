@@ -1,4 +1,4 @@
-from tape import recorder
+from tpd import recorder
 
 recorder.start(
     # base_folder='my_computer/my_data',

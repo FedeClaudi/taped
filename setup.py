@@ -17,8 +17,8 @@ requirements = [
 ]
 
 setup(
-    name="tape",
-    version="1.0",
+    name="tpd",
+    version="1.1rc",
     description="Easy saving of logs, data and plots",
     long_description=long_description,
     long_description_content_type="text/markdown",

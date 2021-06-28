@@ -1,19 +1,19 @@
-# Tape
+# Taped
 A simple way to record the outputs of simulations.
 
-`Tape` is inspired by [loguru](https://github.com/Delgan/loguru) which makes logging easy: `Tape` makes it is to not only save the logs of simulations ran in Python, but also to save data, plots and any other useful file which you'll need to analyze the simulations' results.
+`Taped` is inspired by [loguru](https://github.com/Delgan/loguru) which makes logging easy: `Tape` makes it is to not only save the logs of simulations ran in Python, but also to save data, plots and any other useful file which you'll need to analyze the simulations' results.
 
 To **install Tape**, create a python environment and use:
 ```
-pip install tape
+pip install tpd
 ```
 
 ### Usage
-Using `Tape` is easy:
+Using `Taped` is easy:
 
 ```python
 
-from tape import recorder
+from tpd import recorder
 
 recorder.start(
     base_folder='my_computer/my_data',

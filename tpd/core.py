@@ -13,7 +13,7 @@ from fcutils.plot.figure import save_figure
 from pyinspect.panels import Report
 from myterial import salmon, green, green_light, blue_light, orange
 
-from tape import utils
+from tpd import utils
 
 
 class Recorder:

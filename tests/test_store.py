@@ -3,7 +3,7 @@ from fcutils.path import files
 import matplotlib.pyplot as plt
 import numpy as np
 
-from tape import recorder
+from tpd import recorder
 
 recorder.start()
 
