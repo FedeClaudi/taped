@@ -81,7 +81,9 @@ class Recorder:
 
         # start logging
         logger.configure(
-            handlers=[{"sink": RichHandler(), "format": "{message}"}]
+            handlers=[
+                {"sink": RichHandler(markup=True), "format": "{message}"}
+            ]
         )
         log_file_path = self.folder / "log.log"
         if log_file_path.exists():
@@ -150,7 +152,7 @@ class Recorder:
             Saves a matplotlib figure to file
         """
         dest = self.folder / name
-        logger.debug(f"Saaving figure to: {dest}")
+        logger.debug(f"Saving figure to: {dest}")
 
         if isinstance(figure, plt.Axes):
             figure = figure.figure
