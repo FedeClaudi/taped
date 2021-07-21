@@ -1,5 +1,5 @@
 from pathlib import Path
-from typing import Union, List
+from typing import Union
 import numpy as np
 from loguru import logger
 from rich.logging import RichHandler
@@ -28,13 +28,12 @@ def raise_if_not_started(fn):
 
 
 class Recorder:
-    saved_figures: List = []
-    saved_data: List = []
-    folder = "not yet startd: call `recorder.start()...)`"
-    name = None
-
     def __init__(self):
         self.started_status = False
+        self.saved_figures = []
+        self.saved_data = []
+        self.folder = "not yet startd: call `recorder.start()...)`"
+        self.name = None
 
     def __repr__(self):
         return self.__str__()
