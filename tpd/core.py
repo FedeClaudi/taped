@@ -7,6 +7,7 @@ import matplotlib.pyplot as plt
 from shutil import copyfile
 from rich import print
 from scipy.io import savemat
+import json
 
 from fcutils import path as fcpath
 from fcutils.plot.figure import save_figure
@@ -135,7 +136,7 @@ class Recorder:
             data is. 
         """
         logger.debug(
-            f'Saving data from array with shape ({data.shape}) to file "{name}" with format {fmt}\nDescription: "{description}"'
+            f'Saving data to file "{name}" with format {fmt}\nDescription: "{description}"'
         )
 
         # get destination path
@@ -150,6 +151,13 @@ class Recorder:
             np.save(dest, data)
         elif fmt == "mat":
             savemat(dest, mdict={name: data})
+        elif fmt == "h5":
+            # assumes the data are passed as a dataframe
+            data.to_hdf(dest, key="hdf")
+        elif fmt == "json":
+            # assumes the data are passed as a dict
+            with open(dest, "w", encoding="utf-8") as f:
+                json.dump(data, f, ensure_ascii=False, indent=4)
         else:
             raise ValueError(f'Cannot save data to format: "{fmt}"')
 
