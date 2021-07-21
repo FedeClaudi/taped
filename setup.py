@@ -18,7 +18,7 @@ requirements = [
 
 setup(
     name="tpd",
-    version="1.3rc",
+    version="1.4rc",
     description="Easy saving of logs, data and plots",
     long_description=long_description,
     long_description_content_type="text/markdown",

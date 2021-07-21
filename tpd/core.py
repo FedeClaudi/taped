@@ -16,11 +16,25 @@ from myterial import salmon, green, green_light, blue_light, orange
 from tpd import utils
 
 
+def raise_if_not_started(fn):
+    def wrapper(self, *args, **kwargs):
+        if not self.started_status:
+            raise ValueError(
+                "Recorded must be started first, call `recorder.start()`"
+            )
+        return fn(self, *args, **kwargs)
+
+    return wrapper
+
+
 class Recorder:
     saved_figures: List = []
     saved_data: List = []
-    folder = "not yet startd: call `recorder.start)...)`"
+    folder = "not yet startd: call `recorder.start()...)`"
     name = None
+
+    def __init__(self):
+        self.started_status = False
 
     def __repr__(self):
         return self.__str__()
@@ -56,6 +70,7 @@ class Recorder:
         timestamp: bool = True,
     ):
         self.started = utils.timestamp()
+        self.started_status = True
 
         # get inputs
         self.base_folder = (
@@ -93,6 +108,7 @@ class Recorder:
         logger.debug(f"DPL - Saving data and logs to {self.folder}")
         logger.debug(f"Saving log file to: {str(log_file_path)}")
 
+    @raise_if_not_started
     def copy(self, source: Union[str, Path]):
         """
             Copy a source file to the logs folder
@@ -105,6 +121,7 @@ class Recorder:
             logger.warning("Source file exists already! OVERWRITING")
         copyfile(source, dest)
 
+    @raise_if_not_started
     def add_data(
         self,
         data: np.ndarray,
@@ -145,6 +162,7 @@ class Recorder:
 
         self.saved_data.append(dest)
 
+    @raise_if_not_started
     def add_figure(
         self, figure: Union[plt.Figure, plt.Axes], name: str, svg: bool = True
     ):
@@ -159,6 +177,7 @@ class Recorder:
         save_figure(figure, dest, svg=svg)
         self.saved_figures.append(dest)
 
+    @raise_if_not_started
     def add_figures(self, svg: bool = True):
         """
             Saves all open matplotlb figures, it assumes that each figure
@@ -174,6 +193,7 @@ class Recorder:
                     "Could not save an open figure since it did not have an `_save_name` attribute"
                 )
 
+    @raise_if_not_started
     def describe(self):
         if self.name is None:
             logger.warning(
@@ -223,3 +243,9 @@ class Recorder:
         print(
             f"[dim {green_light}]Total number of files: [dim {blue_light}]{self.n_files}"
         )
+
+
+if __name__ == "__main__":
+    rec = Recorder()
+    rec.start()
+    rec.add_data([1, 2], "test")
