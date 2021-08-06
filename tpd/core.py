@@ -165,7 +165,7 @@ class Recorder:
             if isinstance(data, pd.DataFrame):
                 data.to_csv(dest)
             else:
-                with open(dest, 'w', encoding='utf8', newline='') as f:
+                with open(dest, "w", encoding="utf8", newline="") as f:
                     writer = csv.DictWriter(f, data.keys())
                     writer.writeheader()
                     writer.writerow(data)
