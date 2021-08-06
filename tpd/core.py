@@ -8,6 +8,8 @@ from shutil import copyfile
 from rich import print
 from scipy.io import savemat
 import json
+import pandas as pd
+import csv
 
 from fcutils import path as fcpath
 from fcutils.plot.figure import save_figure
@@ -152,12 +154,21 @@ class Recorder:
         elif fmt == "mat":
             savemat(dest, mdict={name: data})
         elif fmt == "h5":
-            # assumes the data are passed as a dataframe
-            data.to_hdf(dest, key="hdf")
+            # assumes the data are passed as a dataframe or dict
+            utils.as_pandas(data).to_hdf(dest, key="hdf")
         elif fmt == "json":
             # assumes the data are passed as a dict
             with open(dest, "w", encoding="utf-8") as f:
                 json.dump(data, f, ensure_ascii=False, indent=4)
+        elif fmt == "csv":
+            # assumes that data are a dict or pandas dataframe
+            if isinstance(data, pd.DataFrame):
+                data.to_csv(dest)
+            else:
+                with open(dest, 'w', encoding='utf8', newline='') as f:
+                    writer = csv.DictWriter(f, data.keys())
+                    writer.writeheader()
+                    writer.writerow(data)
         else:
             raise ValueError(f'Cannot save data to format: "{fmt}"')
 

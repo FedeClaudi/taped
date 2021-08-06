@@ -1,5 +1,6 @@
 import time
 from rich.table import Table
+import pandas as pd
 
 from myterial import orange, amber
 
@@ -24,3 +25,12 @@ def _make_table(left_header, right_header, nodim=False):
     tb.add_column(right_header, header_style=orange)
 
     return tb
+
+def as_pandas(data):
+    '''Returns a dataframe if possible, an error otherwise'''
+    if isinstance(data, pd.DataFrame):
+        return data
+    elif isinstance(data, dict):
+        return pd.DataFrame(data)
+    else:
+        raise TypeError(f'Expected a DataFrame or dict type, got: {type(data)} insead')
