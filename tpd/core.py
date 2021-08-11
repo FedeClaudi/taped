@@ -174,11 +174,19 @@ class Recorder:
 
         # save data description
         if description is not None:
-            description_dest = self.folder / (name + ".txt")
-            with open(description_dest, "w+") as dout:
-                dout.write(description)
+            self.add_text(description, name=description)
 
         self.saved_data.append(dest)
+
+    @raise_if_not_started
+    def add_text(self, text: str, name="str"):
+        """
+            Saves a name.txt file with the text string
+        """
+        logger.debug(f"Writing text to: {name}.txt")
+        path = self.folder / (name + ".txt")
+        with open(path, "w") as dout:
+            dout.write(text)
 
     @raise_if_not_started
     def add_figure(
