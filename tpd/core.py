@@ -10,6 +10,7 @@ from scipy.io import savemat
 import json
 import pandas as pd
 import csv
+from pyinspect import install_traceback
 
 from fcutils import path as fcpath
 from fcutils.plot.figure import save_figure
@@ -70,6 +71,7 @@ class Recorder:
         base_folder: Union[str, Path] = None,
         name: str = None,
         timestamp: bool = True,
+        hide_locals:bool=True,
     ):
         self.started = utils.timestamp()
         self.started_status = True
@@ -105,7 +107,12 @@ class Recorder:
         log_file_path = self.folder / "log.log"
         if log_file_path.exists():
             log_file_path.unlink()
-        logger.add(log_file_path)
+
+        try:
+            logger.add(log_file_path)
+        except Exception:
+            log_file_path = self.folder / f"log_{utils.timestamp()}.log"
+            logger.add(log_file_path)
 
         logger.debug(f"DPL - Saving data and logs to {self.folder}")
         logger.debug(f"Saving log file to: {str(log_file_path)}")

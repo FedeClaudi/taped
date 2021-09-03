@@ -4,4 +4,4 @@ install_traceback()
 
 from tpd.core import Recorder
 
-recorder = Recorder()
+recorder = Recorder(relevant_only=True)
