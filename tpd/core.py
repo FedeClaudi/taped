@@ -69,9 +69,9 @@ class Recorder:
     def start(
         self,
         base_folder: Union[str, Path] = None,
-        name: str = None,
+        folder_name: str = None,
+        logfile_name: str = None,
         timestamp: bool = True,
-        hide_locals:bool=True,
     ):
         self.started = utils.timestamp()
         self.started_status = True
@@ -80,7 +80,7 @@ class Recorder:
         self.base_folder = (
             Path(base_folder) if base_folder is not None else Path("./cache")
         )
-        self.name = name or f"dpl_log"
+        self.name = folder_name or f"dpl_log"
 
         if timestamp:
             self.name += f"_{utils.timestamp()}"
@@ -104,7 +104,8 @@ class Recorder:
                 {"sink": RichHandler(markup=True), "format": "{message}"}
             ]
         )
-        log_file_path = self.folder / "log.log"
+        logfile_name = logfile_name or 'log'
+        log_file_path = self.folder / (logfile_name + ".log")
         if log_file_path.exists():
             log_file_path.unlink()
 
