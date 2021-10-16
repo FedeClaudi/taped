@@ -8,9 +8,9 @@ from shutil import copyfile
 from rich import print
 from scipy.io import savemat
 import json
+import yaml
 import pandas as pd
 import csv
-from pyinspect import install_traceback
 
 from fcutils import path as fcpath
 from fcutils.plot.figure import save_figure
@@ -104,7 +104,7 @@ class Recorder:
                 {"sink": RichHandler(markup=True), "format": "{message}"}
             ]
         )
-        logfile_name = logfile_name or 'log'
+        logfile_name = logfile_name or "log"
         log_file_path = self.folder / (logfile_name + ".log")
         if log_file_path.exists():
             log_file_path.unlink()
@@ -134,7 +134,7 @@ class Recorder:
     @raise_if_not_started
     def add_data(
         self,
-        data: np.ndarray,
+        data: Union[dict, np.ndarray, pd.DataFrame, pd.Series],
         name: str,
         fmt: str = "npy",
         description: str = None,
@@ -168,6 +168,10 @@ class Recorder:
             # assumes the data are passed as a dict
             with open(dest, "w", encoding="utf-8") as f:
                 json.dump(data, f, ensure_ascii=False, indent=4)
+        elif fmt == "yaml":
+            # assumes the data are passed as a dict
+            with open(dest, "w", encoding="utf-8") as f:
+                yaml.dump(data, f, default_flow_style=False, indent=4)
         elif fmt == "csv":
             # assumes that data are a dict or pandas dataframe
             if isinstance(data, pd.DataFrame):
